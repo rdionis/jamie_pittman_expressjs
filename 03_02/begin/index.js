@@ -1,5 +1,5 @@
-import express from 'express';
-import data from './data/mock.json';
+import express, { request, response } from 'express';
+import data from './data/mock.json' with { type: "json" };
 
 const app = express();
 const PORT = 3000;
@@ -14,6 +14,15 @@ app.use('/images', express.static('images'));
 app.get('/', (request, response) => {
     response.json(data);
 })
+
+//GET with next()
+app.get('/next', (request, response, next) => {
+    console.log("The response will be sent by the next function.");
+    next();
+}, (request, response) => {
+    response.send("I just set up a route with a second callback.")
+}
+)
 
 //GET with Routing Parameters
 app.get('/class/:id', (request, response)=> {

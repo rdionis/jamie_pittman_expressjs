@@ -1,5 +1,5 @@
 import express from 'express';
-import data from './data/mock.json';
+import data from './data/mock.json' with { type: 'json'};
 
 const app = express();
 const PORT = 3000;
@@ -14,6 +14,16 @@ app.use('/images', express.static('images'));
 app.get('/', (request, response) => {
     response.json(data);
 })
+
+//GET – download method
+app.get('/download', (request, response) => {
+    response.download("images/mountains_2.jpeg");
+})
+
+//GET – redirect method
+app.get('/redirect', (request, response) => {
+    response.redirect("http://www.linkedin.com");
+});
 
 //GET with next()
 app.get('/next', (request, response, next) => {

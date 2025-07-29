@@ -25,17 +25,6 @@ app.delete("/delete", (request, response) => {
   response.send("This is a DELETE request at /delete.");
 });
 
-
-
-
-
-
-
-
-
-
-
-
 app.listen(PORT, () => {
   console.log(`The server is running on port ${PORT}`)
   console.log(data);

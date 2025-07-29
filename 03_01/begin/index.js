@@ -1,5 +1,5 @@
-import express from 'express';
-import data from './data/mock.json';
+import express, { request, response } from 'express';
+import data from './data/mock.json' with { type: "json"};
 
 const app = express();
 const PORT = 3000;
@@ -13,6 +13,14 @@ app.use('/images', express.static('images'));
 //GET
 app.get('/', (request, response) => {
     response.json(data);
+})
+
+// GET with Routing Parameters
+app.get('/class/:id', (request, response) => {
+    //console.log(request.params);
+    const studentId = Number(request.params.id);
+    const student = data.filter(student => student.id === studentId);
+    response.send(student);
 })
 
 //POST
@@ -32,5 +40,5 @@ app.delete('/delete', (request, response) => {
 
 app.listen(PORT, () => {
     console.log(`The server is running on port ${PORT}`)
-    console.log(data);
+    //console.log(data);
 });

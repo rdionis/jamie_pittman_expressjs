@@ -1,12 +1,12 @@
 import express from 'express';
-import data from './data/mock.json';
+import data from './data/mock.json' with { type: "json" };
 
 const app = express();
 const PORT = 3000;
 
 //GET
 app.get('/', (request, response) => {
-    response.send('This is a GET request at /')
+    response.json(data);
 })
 
 //POST

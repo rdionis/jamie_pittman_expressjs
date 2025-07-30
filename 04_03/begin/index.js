@@ -1,5 +1,5 @@
 import express from 'express';
-import data from './data/mock.json';
+import data from './data/mock.json' with { type: "json" };
 
 const app = express();
 const PORT = 3000;
@@ -38,7 +38,8 @@ app.get('/redirect', (request, response) => {
 //Route chaining
 app.route('/class')
 .get((request, response) => {
-    response.send('Retrieve class info')
+    //response.send('Retrieve class info')
+    throw new Error();
 }).post((request, response) => {
     response.send('Create class info')
 }).put((request, response) => {
@@ -78,6 +79,13 @@ app.put('/edit', (request, response) => {
 app.delete('/delete', (request, response) => {
     response.send('This is a DELETE request at /delete')
 })
+
+//Creating an error handler function
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send("Something is broken!");
+})
+
 
 app.listen(PORT, () => {
     console.log(`The server is running on port ${PORT}`)

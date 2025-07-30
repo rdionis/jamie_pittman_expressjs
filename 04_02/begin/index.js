@@ -1,5 +1,5 @@
 import express from 'express';
-import data from './data/mock.json';
+import data from './data/mock.json' with { type: "json"};
 
 const app = express();
 const PORT = 3000;
@@ -10,11 +10,21 @@ app.use(express.static('public'));
 //Using the images folder at the route /images
 app.use('/images', express.static('images'));
 
+//Using express.json and express.urlencoded
+//app.use(express.json()); // we want our request to be json
+
+app.use(express.urlencoded({extended: true}));
+
 //GET
 app.get('/', (request, response) => {
     response.json(data);
 })
 
+//POST – express.json and express.urlencoded
+app.post("/item", (request, response) => {
+    console.log(request.body);
+    response.send(request.body);
+});
 //GET - download method
 app.get('/download', (request, response) => {
     response.download('images/mountains_2.jpeg')
